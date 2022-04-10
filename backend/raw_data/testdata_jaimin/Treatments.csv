@@ -1,0 +1,7 @@
+treatment_id,treatment_name,type
+TR_01,Chemotherapy,Anthroacycline
+TR_02,Chemotherapy,corticosteroid
+TR_03,Chemotherapy,antitumor antibiotic
+TR_04,Radiation,Brain
+TR_05,Radiation,Abdomen
+TR_06,Radiation,Chest

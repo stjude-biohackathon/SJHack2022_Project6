@@ -1,0 +1,23 @@
+{% comment %} {% load staticfiles %} {% endcomment %}
+<html lang="en">
+
+    <head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="This is Django template backend app with REST api support.">
+		<title>SimplySamples Backend</title>
+    </head>
+
+    <body>
+		<header>
+		</header>
+		<div style="text-align:center;">
+			<h1> SimplySamples Backend App </h1>
+			<h3> The App is running!<h3>
+			<h4> {{ data.count }} data points added to database from {{ tables.count }} CSV files.</h4>
+			<h4> go to <a href="http://localhost:8000/api/">http://localhost:8000/api/</a> 
+				to access all available queries.</h4>
+		</div>
+	</body>
+</html> 
