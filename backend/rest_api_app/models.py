@@ -24,5 +24,5 @@ class Schema(models.Model):
 
 class Data(models.Model):
 	table_name = models.CharField(max_length = 80)
-	column = models.ForeignKey('Schema', on_delete = models.CASCADE)
+	column = models.CharField(max_length = 80)
 	value = models.CharField(max_length = 100)

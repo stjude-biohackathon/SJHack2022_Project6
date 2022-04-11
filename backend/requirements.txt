@@ -3,3 +3,4 @@ psycopg2>=2.8
 requests>=2.0
 djangorestframework
 django-cors-headers
+django-filter

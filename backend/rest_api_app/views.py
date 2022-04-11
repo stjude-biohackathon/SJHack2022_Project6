@@ -2,7 +2,7 @@ from asyncio import constants
 from django.shortcuts import render
 import requests
 import csv
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from os import listdir
 from os.path import isfile, join, splitext
 from .models import Table, Schema, Data
@@ -48,10 +48,9 @@ def load_csv_data():
 						)
 				else:
 					for idx, value_temp in enumerate(row):
-						column_obj = Schema.objects.get(column = columns[idx], table_name = table_name_temp)
 						Data.objects.create(
 							table_name = table_name_temp,
-							column = column_obj,
+							column = columns[idx],
 							value = value_temp
 						)
 
@@ -63,9 +62,14 @@ class SchemaViewSet(viewsets.ModelViewSet):
 	queryset = Schema.objects.all().order_by('table_name')
 	serializer_class = SchemaSerializer
 
-class DataViewSet(viewsets.ModelViewSet):
+class DataViewSet(generics.ListAPIView):
 	"""
     API endpoint that shows data.
     """
-	queryset = Data.objects.all().order_by('table_name')
+	queryset = Data.objects.all()
 	serializer_class = DatatSerializer
+
+	filter_fields = (
+		'table_name',
+		'column'
+	)
