@@ -8,8 +8,8 @@ class Schema(models.Model):
 	table_name = models.CharField(max_length = 80)
 	column = models.CharField(max_length = 80)
 	type = models.CharField(max_length = 10, choices = DATA_TYPES)
-	is_primary = models.BooleanField(False)
-	is_foreign = models.BooleanField(False)
+	is_primary = models.BooleanField()
+	is_foreign = models.BooleanField()
 	foreign_table = models.CharField(max_length = 80, blank = True, null = True)
 	
 	def __str__(self):

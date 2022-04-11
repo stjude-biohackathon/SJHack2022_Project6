@@ -18,6 +18,7 @@ Aim of this project is to..
 
 * [Docker](https://www.docker.com/)
 * [Django](https://www.djangoproject.com/)
+* [React](https://reactjs.org/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -50,13 +51,23 @@ To get a local copy up and running follow these simple example steps:
    ```
 4. Open new terminal tab and start Django app container using following command:
    ```sh 
-   docker-compose up web
+   docker-compose up backend
    ```
-   Once you see following LOG in terminal, the app is ready!
+   Once you see following LOG in terminal, the backend app is ready!
    ```sh
    web_1  | Starting development server at http://0.0.0.0:8000/
    web_1  | Quit the server with CONTROL-C.
    ```
+5. Open new terminal tab and start React app container using following command:
+   ```sh 
+   docker-compose up frontend
+   ```
+   Once you see following LOG in terminal, the frontend app is ready!
+   ```sh
+   sjhack2022_project6-frontend-1  | 
+   sjhack2022_project6-frontend-1  | webpack 5.72.0 compiled with 1 warning in 522 ms
+   ```
+   frontend app can be accessed at: http://localhost:3000/
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -73,7 +84,7 @@ Coming soon..
 
 - [x] Add Django Backend
 - [x] Support Rest api with sample db
-- [ ] Add React frontend
+- [x] Add React frontend
 - [ ] Show sample data in table
 - [ ] Allow filtering of data
 - [ ] Allow users to select any column from any tables

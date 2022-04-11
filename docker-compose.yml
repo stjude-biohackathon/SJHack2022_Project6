@@ -11,7 +11,7 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  web:
+  backend:
     build: ./backend
     command: >
       bash -c "python backend/manage.py migrate --fake sessions zero
@@ -29,3 +29,9 @@ services:
       - db
     links:
       - db
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
