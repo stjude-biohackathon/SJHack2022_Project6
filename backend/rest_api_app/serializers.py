@@ -17,6 +17,7 @@ class DatatSerializer(serializers.ModelSerializer):
         many = False,
         read_only = True
     )
+
     class Meta:
         model = Data
         fields = ['table_name', 'column', 'value']
