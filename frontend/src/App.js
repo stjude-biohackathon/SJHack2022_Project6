@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import Table from './components/Table';
+import Nav from './components/Nav';
 import WithTableLoading from './components/withTableLoading';
 
 function App() {
@@ -28,8 +29,8 @@ function App() {
 
   return (
     <div className='App'>
-      <div className='container  mx-auto'>
-        <h1 className='text-5xl my-10'>Simply Samples</h1>
+      <div className='w-full mx-auto'>
+        <Nav />
       </div>
       <div className='repo-container'>
         <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3>
