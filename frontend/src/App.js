@@ -29,9 +29,10 @@ function App() {
   return (
     <div className='App'>
       <div className='container'>
-        <h1>Samples</h1>
+        <h1>Simply Samples</h1>
       </div>
       <div className='repo-container'>
+        <h3>Table: Samples</h3>
         <TableLoading isLoading={appState.loading} samples={appState.samples} />
       </div>
       <footer>
