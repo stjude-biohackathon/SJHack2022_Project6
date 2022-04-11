@@ -28,11 +28,11 @@ function App() {
 
   return (
     <div className='App'>
-      <div className='container'>
-        <h1>Simply Samples</h1>
+      <div className='container  mx-auto'>
+        <h1 className='text-5xl my-10'>Simply Samples</h1>
       </div>
       <div className='repo-container'>
-        <h3>Table: Samples</h3>
+        <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3>
         <TableLoading isLoading={appState.loading} samples={appState.samples} />
       </div>
       <footer>

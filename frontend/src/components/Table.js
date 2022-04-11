@@ -50,19 +50,14 @@ const Table = (props) => {
   } = useTable({ columns, data })
 
   return (
-	<table {...getTableProps()} style={{ border: 'solid 1px blue', margin: '20px auto' }}>
+	<table {...getTableProps()} className='border border-green-800 m-auto border-collapse mb-10'>
 	  <thead>
 		{headerGroups.map(headerGroup => (
 		  <tr {...headerGroup.getHeaderGroupProps()}>
 			{headerGroup.headers.map(column => (
 			  <th
 				{...column.getHeaderProps()}
-				style={{
-				  borderBottom: 'solid 3px red',
-				  background: 'aliceblue',
-				  color: 'black',
-				  fontWeight: 'bold',
-				}}
+				className = 'border border-green-600 p-5'
 			  >
 				{column.render('Header')}
 			  </th>
@@ -79,11 +74,7 @@ const Table = (props) => {
 				return (
 				  <td
 					{...cell.getCellProps()}
-					style={{
-					  padding: '10px',
-					  border: 'solid 1px gray',
-					  background: 'papayawhip',
-					}}
+					className = 'border border-green-600 p-2'
 				  >
 					{cell.render('Cell')}
 				  </td>

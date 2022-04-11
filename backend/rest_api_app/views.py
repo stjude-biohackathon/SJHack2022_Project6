@@ -5,7 +5,7 @@ import csv
 from rest_framework import viewsets
 from os import listdir
 from os.path import isfile, join, splitext
-from .models import Schema, Data
+from .models import Table, Schema, Data
 from .serializers import SchemaSerializer, DatatSerializer
 
 def home(request):
@@ -29,6 +29,9 @@ def load_csv_data():
 		with open(csv_path, mode='r') as file:
 			spamreader = csv.reader(file, delimiter=',')
 			table_name_temp = splitext(csv_file)[0]
+			Table.objects.create(
+				table_name = table_name_temp
+			)
 			columns = []
 			for row in spamreader:
 				if line_count == 0:
