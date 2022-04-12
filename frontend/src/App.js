@@ -79,7 +79,7 @@ function App() {
           {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} columns_vis={appState.columns}/>}
         </div>
       </div>
-      <footer>
+      <footer className='absolute bottom-0 w-full'>
         <div className='footer h-10 bg-gray-200 p-2'>
           Built with{' '}
           <span role='img' aria-label='love'>
