@@ -1,4 +1,6 @@
-export function formatDataForReact(samples){
+import React from 'react'
+
+export function formatDataForReact(samples, schema){
 	const cols_dups = []
 	samples.forEach(sample => {
 	  cols_dups.push(sample.column)
@@ -8,12 +10,16 @@ export function formatDataForReact(samples){
   const columns = []
   
   cols.forEach(col => {
-	  columns.push(
-		  {
-			  'Header': col,
-			  'accessor': col
-		  }
-	  )
+	const cols = schema.filter(s =>s.column === col)
+	let is_float = false
+	if (cols.length) is_float = cols[0].type !== 'STR'
+	const default_col = {
+		'Header': col,
+		'accessor': col,
+		filter: is_float ? 'between' : 'fuzzyText',
+	}
+	if (is_float) default_col.Filter = NumberRangeColumnFilter
+	columns.push(default_col)
   })
 
   // get table data
@@ -48,4 +54,57 @@ export function formatColumnsForReact(schema){
 		columns.push(tab)
 	})
 	return columns
+}
+
+ // This is a custom UI for our 'between' or number range
+  // filter. It uses two number boxes and filters rows to
+  // ones that have values between the two
+  function NumberRangeColumnFilter({
+	column: { filterValue = [], preFilteredRows, setFilter, id },
+}) {
+	const [min, max] = React.useMemo(() => {
+	  let min = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+	  let max = preFilteredRows.length ? preFilteredRows[0].values[id] : 0
+	  preFilteredRows.forEach(row => {
+		min = Math.min(row.values[id], min)
+		max = Math.max(row.values[id], max)
+	  })
+	  return [min, max]
+	}, [id, preFilteredRows])
+  
+	return (
+	  <div
+		style={{
+		  display: 'flex',
+		}}
+	  >
+		<input
+		  value={filterValue[0] || ''}
+		  type="number"
+		  onChange={e => {
+			const val = e.target.value
+			setFilter((old = []) => [val ? parseInt(val, 10) : undefined, old[1]])
+		  }}
+		  placeholder={`Min (${min})`}
+		  style={{
+			width: '70px',
+			marginRight: '0.5rem',
+		  }}
+		/>
+		to
+		<input
+		  value={filterValue[1] || ''}
+		  type="number"
+		  onChange={e => {
+			const val = e.target.value
+			setFilter((old = []) => [old[0], val ? parseInt(val, 10) : undefined])
+		  }}
+		  placeholder={`Max (${max})`}
+		  style={{
+			width: '70px',
+			marginLeft: '0.5rem',
+		  }}
+		/>
+	  </div>
+	)
 }

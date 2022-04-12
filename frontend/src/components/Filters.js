@@ -38,6 +38,7 @@ const Filters = (props) => {
 
 	return (
 		<div className='w-1/5 h-[100vh] bg-gray-200 flex flex-col justify-start'>
+			<aside className='h-screen sticky top-0 overflow-y-scroll scrolling-touch'>
 			<h2 className='text-xl mt-10'> Filters </h2>
 			<div className='grid place-items-start p-4'>
 			{
@@ -68,10 +69,12 @@ const Filters = (props) => {
 					</div>
 				))
 			}
+			
 			</div>
 			<button className='inline-block font-bold text-sm px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-4 lg:mt-0'>
 				Apply
-			</button> 
+			</button>
+			</aside> 
 		</div>
 	)
 }

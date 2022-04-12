@@ -65,7 +65,7 @@ function App() {
         {/* <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3> */}
         <div className='flex flex-nowrap'>
           <Filters schema={appState.schema} />
-          {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} />}
+          {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} />}
         </div>
       </div>
       <footer>
