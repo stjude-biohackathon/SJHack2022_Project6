@@ -2,6 +2,7 @@ import React from 'react'
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
 import { formatDataForReact } from '../utils/format_data'
 import { matchSorter } from 'match-sorter'
+import { getCSV } from '../utils/htmlTableToCsv'
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -121,59 +122,72 @@ const Table = (props) => {
 	)
 
   return (
-	<div className='flex-auto'>
-		<table {...getTableProps()} className='m-auto border-4 border-opacity-25 border-collapse mb-10 mt-20 border-red-900'>
-			<thead>
-				{headerGroups.map(headerGroup => (
-				<tr {...headerGroup.getHeaderGroupProps()}>
-					{headerGroup.headers.map(column => (
-					<th
-						{...column.getHeaderProps()}
-						className = 'border border-opacity-50 border-red-900 p-5 bg-gray-200'
-					>
-						{column.render('Header')}
-						<div>{column.canFilter ? column.render('Filter') : null}</div>
-					</th>
+		<div className='flex-auto'>
+			<button
+				onClick={getCSV}
+				className='float-right inline-block font-bold text-sm px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-20 mb-2'
+			>
+				Download CSV
+			</button>
+			<table
+				{...getTableProps()}
+				className='m-auto border-4 border-opacity-25 border-collapse mb-10 mt-6 border-red-900'
+			>
+				<thead>
+					{headerGroups.map((headerGroup) => (
+						<tr {...headerGroup.getHeaderGroupProps()}>
+							{headerGroup.headers.map((column) => (
+								<th
+									{...column.getHeaderProps()}
+									className='border border-opacity-50 border-red-900 p-5 bg-gray-200'
+								>
+									{column.render('Header')}
+									<div>
+										{column.canFilter
+											? column.render('Filter')
+											: null}
+									</div>
+								</th>
+							))}
+						</tr>
 					))}
-				</tr>
-				))}
-				<tr>
-				<th
-				colSpan={visibleColumns.length}
-				style={{
-					textAlign: 'left',
-				}}
-				>
-				<GlobalFilter
-					preGlobalFilteredRows={preGlobalFilteredRows}
-					globalFilter={state.globalFilter}
-					setGlobalFilter={setGlobalFilter}
-				/>
-				</th>
-			</tr>
-			</thead>
-			<tbody {...getTableBodyProps()}>
-				{rows.map(row => {
-				prepareRow(row)
-				return (
-					<tr {...row.getRowProps()}>
-					{row.cells.map(cell => {
-						return (
-						<td
-							{...cell.getCellProps()}
-							className = 'border border-opacity-50 border-red-600 py-2 px-1'
+					<tr>
+						<th
+							colSpan={visibleColumns.length}
+							style={{
+								textAlign: 'left',
+							}}
 						>
-							{cell.render('Cell')}
-						</td>
-						)
-					})}
+							<GlobalFilter
+								preGlobalFilteredRows={preGlobalFilteredRows}
+								globalFilter={state.globalFilter}
+								setGlobalFilter={setGlobalFilter}
+							/>
+						</th>
 					</tr>
-				)
-				})}
-			</tbody>
-		</table>
-	</div>
-  )
+				</thead>
+				<tbody {...getTableBodyProps()}>
+					{rows.map((row) => {
+						prepareRow(row);
+						return (
+							<tr {...row.getRowProps()}>
+								{row.cells.map((cell) => {
+									return (
+										<td
+											{...cell.getCellProps()}
+											className='border border-opacity-50 border-red-600 py-2 px-1'
+										>
+											{cell.render('Cell')}
+										</td>
+									);
+								})}
+							</tr>
+						);
+					})}
+				</tbody>
+			</table>
+		</div>
+  );
 }
 
 // Define a custom filter filter function!
