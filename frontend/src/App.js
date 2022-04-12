@@ -14,6 +14,7 @@ function App() {
     loading: false,
     schema: null,
     samples: null,
+    columns: null,
     loggedIn: true
   });
 
@@ -41,6 +42,13 @@ function App() {
       });
 }, [setAppState])
 
+  const handleFilterCallback = (columns) => {
+    setAppState(prevState => {
+      return {...prevState, columns};
+  })
+  }
+  console.log(appState)
+
   const login = (user, pwd) => {
       if(user && pwd) {
           console.log('login @ App');
@@ -67,8 +75,8 @@ function App() {
       <div className='repo-container items-start h-full'>
         {/* <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3> */}
         <div className='flex flex-nowrap'>
-          <Filters samples={appState.samples} schema={appState.schema} />
-          {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} />}
+          <Filters samples={appState.samples} schema={appState.schema} columns={appState.columns} parentCallback = {handleFilterCallback} />
+          {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} columns_vis={appState.columns}/>}
         </div>
       </div>
       <footer>
