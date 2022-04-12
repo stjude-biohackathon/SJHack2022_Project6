@@ -1,8 +1,17 @@
 import React from "react";
 import {ReactComponent as Logo} from '../static/stjude-logo-child.svg';
 
-const Nav = () => {
+const Nav = (props) => {
 
+    const login = () => {
+        console.log('login @ Nav');
+        props.handleLogin('admin', '123');
+    }
+
+    const logout = () => {
+        console.log('logout @ Nav');
+        props.handleLogin();
+    }
 
     return (
 		<nav class='w-full flex items-center justify-around flex-wrap bg-red-900 p-6'>
@@ -14,12 +23,12 @@ const Nav = () => {
 			</div>
 			
 			<div class='w-full block grow lg:flex lg:items-end lg:w-auto'>
-					<a
-						href='#'
+					<button
+                        onClick={props.loggedIn ? logout : login}
 						class='inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-red-900 hover:bg-white mt-4 lg:mt-0'
 					>
-						Login
-					</a>
+						{props.loggedIn ? 'Logout' : 'Login'}
+					</button>
 			</div>
 		</nav>
 	);
