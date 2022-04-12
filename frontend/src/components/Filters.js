@@ -3,17 +3,17 @@ import { useState } from 'react'
 import { formatColumnsForReact } from '../utils/format_data'
 
 const Filters = (props) => {
-	let { schema } = props
+	let { samples, schema } = props
+	if (!samples || !samples.length) samples = []
 	if (!schema || !schema.length) schema = []
 	const tables = formatColumnsForReact(schema)
-	// console.log(tables)
 	const [checked, setChecked] = useState([])
 	let all_cols = []
 	schema.forEach(col => 
 		all_cols.push({
 			table_name: col.table_name,
 			column: col.column,
-			visible: false
+			visible: samples.find(s => (s.column === col.column && s.table_name === col.table_name)) ? true: false
 	}))
 
 	// Add/Remove checked item from list
@@ -37,9 +37,12 @@ const Filters = (props) => {
 	console.log('visible columns', visible_cols)
 
 	return (
-		<div className='w-1/5 h-[100vh] bg-gray-200 flex flex-col justify-start'>
-			<aside className='h-screen sticky top-0 overflow-y-scroll scrolling-touch'>
-			<h2 className='text-xl mt-10'> Filters </h2>
+		<div className='w-1/5 h-full bg-gray-200 flex flex-col justify-start'>
+			<aside className='h-full sticky top-0 overflow-y-scroll scrolling-touch'>
+			<h2 className='text-2xl mt-10 mb-5'> Filters </h2>
+			<div className='border-t-2 border-red-800 border-opacity-25 items-start pl-10 grid justify-items-start text-left'>
+				<p className='text-sm mt-2'> *  Unique ID <br/> ~ Connecting ID</p>
+			</div>
 			<div className='grid place-items-start p-4'>
 			{
 				tables.map(table => (
@@ -58,8 +61,9 @@ const Filters = (props) => {
 													name={u_key}
 													value={u_key}
 													onChange={handleCheck}
+													checked={all_cols.find(c => (c.column === col.column && c.table_name === table.table_name)).visible}
 												/>
-												<label className='pl-2' htmlFor={`custom-checkbox-${u_key}`}>{col.column}</label>
+												<label className='pl-2' htmlFor={`custom-checkbox-${u_key}`}>{col.column + (col.is_primary ? ' *' : '') + (col.is_foreign ? ' ~' : '')}</label>
 											</div>
 										</li>
 									)
@@ -71,7 +75,7 @@ const Filters = (props) => {
 			}
 			
 			</div>
-			<button className='inline-block font-bold text-sm px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-4 lg:mt-0'>
+			<button className='inline-block font-bold text-sm my-6 px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-4 lg:mt-0'>
 				Apply
 			</button>
 			</aside> 

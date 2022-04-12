@@ -17,10 +17,11 @@ const Nav = (props) => {
 		<nav className='w-full flex items-center justify-between flex-wrap bg-red-900 p-6'>
 			<div className='flex items-center shrink-0 text-white mr-6'>
 				<Logo title='St. Jude child logo' />
-				<span className='font-semibold text-4xl tracking-tight ml-6'>
-					Simply Samples
-				</span>
 			</div>
+
+      <div className='font-semibold text-4xl tracking-tight ml-6 text-white'>
+					Simply Samples
+				</div>
 			
 			<div className='w-full block grow lg:flex lg:items-end lg:w-auto'>
 					<button

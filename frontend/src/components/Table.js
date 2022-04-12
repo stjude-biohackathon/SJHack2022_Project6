@@ -61,6 +61,7 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 const Table = (props) => {
 	let { samples, schema } = props;
 	if (!samples || !samples.length) samples = []
+	if (!schema || !schema.length) schema = []
 	let data = []
 	let  columns = []
 
@@ -160,7 +161,7 @@ const Table = (props) => {
 						return (
 						<td
 							{...cell.getCellProps()}
-							className = 'border border-opacity-50 border-red-600 p-2'
+							className = 'border border-opacity-50 border-red-600 py-2 px-1'
 						>
 							{cell.render('Cell')}
 						</td>

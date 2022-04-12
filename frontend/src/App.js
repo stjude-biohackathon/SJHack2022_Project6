@@ -5,6 +5,8 @@ import Filters from './components/Filters';
 import Table from './components/Table';
 import WithTableLoading from './components/withTableLoading';
 
+const default_table = 'Samples'
+
 function App() {
   const TableLoading = WithTableLoading(Table);
   const [appState, setAppState] = useState({
@@ -21,12 +23,12 @@ function App() {
     });
 
     const schema_url = `http://localhost:8000/api/schema/`
-    const data_url = `http://localhost:8000/api/data/`
+    const data_url = `http://localhost:8000/api/data/?table_name=` + default_table
 
     fetch(data_url)
       .then((res) => res.json())
       .then((values) => {
-        const samples = values.results.filter(v => v.table_name === 'Samples')
+        const samples = values.results
         fetch(schema_url)
           .then((res) => res.json())
           .then((cols) => {
@@ -57,14 +59,14 @@ function App() {
   // console.log(appState)
 
   return (
-    <div className='App flex flex-col justify-between h-screen'>
+    <div className='App flex flex-col justify-start h-screen'>
       <div className='w-full mx-auto'>
         <Nav handleLogin={login} loggedIn={appState.loggedIn} />
       </div>
-      <div className='repo-container items-start h-screen'>
+      <div className='repo-container items-start h-full'>
         {/* <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3> */}
         <div className='flex flex-nowrap'>
-          <Filters schema={appState.schema} />
+          <Filters samples={appState.samples} schema={appState.schema} />
           {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} />}
         </div>
       </div>
@@ -74,7 +76,7 @@ function App() {
           <span role='img' aria-label='love'>
           ❤️
           </span>{' '}
-          by St. Jude BioHackathon Team #6
+          by St. Jude BioHackathon Team - 6
         </div>
       </footer>
     </div>
