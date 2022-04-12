@@ -1,45 +1,19 @@
 import React from 'react'
 import { useTable } from 'react-table'
+import { formatDataForReact } from '../utils/format_data'
 
 const Table = (props) => {
 	let { samples } = props;
 	if (!samples || !samples.length) samples = []
-	const data = []
+	let data = []
 	let  columns = []
 
 	// if (!samples || samples.length === 0) return <p>No repos, sorry</p>;
 
-	// get column names
-	const cols_dups = []
-  	samples.forEach(sample => {
-		cols_dups.push(sample.column)
-  	})
+	const [columns_, data_] = formatDataForReact(samples)
 
-	const cols = [...new Set(cols_dups)]
-	const table_cols = []
-	
-	cols.forEach(col => {
-		table_cols.push(
-			{
-				'Header': col,
-				'accessor': col
-			}
-		)
-	})
-
-  	columns = React.useMemo(() => table_cols, [])
-
-	// get table data
-	let count = 0
-	const sample_count = samples.length / columns.length
-	for (let i = 0; i < sample_count; i++){
-		const sample = {}
-		for (let j = 0; j < columns.length; j++){
-			count = (i * columns.length) + j
-			sample[samples[count].column] = samples[count].value
-		}
-		data.push(sample)
-	}
+	columns = React.useMemo(() => columns_, [])
+	data = React.useMemo(() => data_, [])
    
   const {
 	getTableProps,
@@ -50,41 +24,43 @@ const Table = (props) => {
   } = useTable({ columns, data })
 
   return (
-	<table {...getTableProps()} className='border border-green-800 m-auto border-collapse mb-10'>
-	  <thead>
-		{headerGroups.map(headerGroup => (
-		  <tr {...headerGroup.getHeaderGroupProps()}>
-			{headerGroup.headers.map(column => (
-			  <th
-				{...column.getHeaderProps()}
-				className = 'border border-green-600 p-5'
-			  >
-				{column.render('Header')}
-			  </th>
-			))}
-		  </tr>
-		))}
-	  </thead>
-	  <tbody {...getTableBodyProps()}>
-		{rows.map(row => {
-		  prepareRow(row)
-		  return (
-			<tr {...row.getRowProps()}>
-			  {row.cells.map(cell => {
+	<div className='flex-auto'>
+		<table {...getTableProps()} className='m-auto border-4 border-opacity-25 border-collapse mb-10 mt-20 border-red-900'>
+			<thead>
+				{headerGroups.map(headerGroup => (
+				<tr {...headerGroup.getHeaderGroupProps()}>
+					{headerGroup.headers.map(column => (
+					<th
+						{...column.getHeaderProps()}
+						className = 'border border-opacity-50 border-red-900 p-5 bg-gray-200'
+					>
+						{column.render('Header')}
+					</th>
+					))}
+				</tr>
+				))}
+			</thead>
+			<tbody {...getTableBodyProps()}>
+				{rows.map(row => {
+				prepareRow(row)
 				return (
-				  <td
-					{...cell.getCellProps()}
-					className = 'border border-green-600 p-2'
-				  >
-					{cell.render('Cell')}
-				  </td>
+					<tr {...row.getRowProps()}>
+					{row.cells.map(cell => {
+						return (
+						<td
+							{...cell.getCellProps()}
+							className = 'border border-opacity-50 border-red-600 p-2'
+						>
+							{cell.render('Cell')}
+						</td>
+						)
+					})}
+					</tr>
 				)
-			  })}
-			</tr>
-		  )
-		})}
-	  </tbody>
-	</table>
+				})}
+			</tbody>
+		</table>
+	</div>
   )
 }
 export default Table
