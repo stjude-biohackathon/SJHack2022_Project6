@@ -59,11 +59,12 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
   fuzzyTextFilterFn.autoRemove = val => !val
 
 const Table = (props) => {
-	let { samples, schema } = props;
+	let { samples, schema, columns_vis } = props;
 	if (!samples || !samples.length) samples = []
 	if (!schema || !schema.length) schema = []
 	let data = []
-	let  columns = []
+	let columns = []
+	console.log(columns_vis)
 
 	// if (!samples || samples.length === 0) return <p>No repos, sorry</p>;
 
@@ -71,6 +72,7 @@ const Table = (props) => {
 
 	columns = React.useMemo(() => columns_, [])
 	data = React.useMemo(() => data_, [])
+	// console.log(data)
 	const filterTypes = React.useMemo(
 		() => ({
 		  	// Add a new fuzzyTextFilterFn filter type.
