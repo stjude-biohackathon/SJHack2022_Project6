@@ -4,6 +4,7 @@ import Nav from './components/Nav';
 import Filters from './components/Filters';
 import Table from './components/Table';
 import WithTableLoading from './components/withTableLoading';
+import githubImg from './static/GitHub-Mark-32px.png'
 
 const default_table = 'Samples'
 
@@ -38,7 +39,7 @@ function App() {
           })
         })
       });
-  }, [setAppState])
+}, [setAppState])
 
   const login = (user, pwd) => {
       if(user && pwd) {
@@ -77,6 +78,9 @@ function App() {
           ❤️
           </span>{' '}
           by St. Jude BioHackathon Team - 6
+          <a href='https://github.com/stjude-biohackathon/SJHack2022_Project6' target='_blank'>
+            <img className='inline mx-6' src={githubImg} alt='GitHub Link' />
+          </a>
         </div>
       </footer>
     </div>
