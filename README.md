@@ -18,7 +18,6 @@ Example Demo app:
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 ### Built With
 
 * [Docker](https://www.docker.com/)
@@ -27,6 +26,8 @@ Example Demo app:
 * [React Table](https://react-table.tanstack.com/)
 * [Tailwind](https://tailwindui.com/)
 
+### Architecture
+![This is an image](frontend/public/Architecture.png)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
