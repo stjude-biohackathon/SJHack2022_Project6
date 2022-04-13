@@ -129,10 +129,10 @@ To see your data on frontend go to this url: http://localhost:3000/
 - [x] Add Django Backend
 - [x] Support Rest api with sample db
 - [x] Add React frontend
-- [ ] Show sample data in table
-- [ ] Allow filtering of data
+- [x] Show sample data in table
+- [x] Allow filtering of data
 - [ ] Allow users to select any column from any tables
-- [ ] Allow users to export data into csv file or generate reports
+- [x] Allow users to export data into csv file or generate reports
 - [ ] Allow users to add new tables or new data for existing tables
 - [ ] Add security feature by implementing login
 
