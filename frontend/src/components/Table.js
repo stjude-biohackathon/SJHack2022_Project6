@@ -127,7 +127,7 @@ const Table = (props) => {
 		<div className='flex-auto overflow-scroll'>
 			<button
 				onClick={getCSV}
-				className='float-right inline-block font-bold text-sm px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-20 mb-2'
+				className='float-right inline-block font-bold text-sm mx-4 px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-20 mb-2'
 			>
 				Download CSV
 			</button>

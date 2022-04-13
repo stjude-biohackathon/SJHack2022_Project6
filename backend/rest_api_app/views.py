@@ -20,8 +20,8 @@ def home(request):
 	return render(request, 'home.html', {'tables': tables, 'data': data})
 
 def load_csv_data():
-	csv_files_path = './backend/raw_data/testdata_jaimin/'
-	schema_name_temp = 'testdata_jaimin'
+	csv_files_path = './backend/raw_data/'
+	schema_name_temp = 'schema_1'
 	csv_files = [f for f in listdir(csv_files_path) if isfile(join(csv_files_path, f))]
 	for csv_file in csv_files:
 		csv_path = csv_files_path + csv_file
