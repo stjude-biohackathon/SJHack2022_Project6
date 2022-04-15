@@ -6,8 +6,6 @@ import Table from './components/Table';
 import WithTableLoading from './components/withTableLoading';
 import githubImg from './static/GitHub-Mark-32px.png'
 
-const default_table = 'Samples'
-
 function App() {
   const TableLoading = WithTableLoading(Table);
   const [appState, setAppState] = useState({
@@ -24,22 +22,30 @@ function App() {
         return {...prevState, loading: true }
     });
 
+    let default_table
     const schema_url = `http://localhost:8000/api/schema/`
-    const data_url = `http://localhost:8000/api/data/?table_name=` + default_table
-
-    fetch(data_url)
+    const data_url = `http://localhost:8000/api/data/?table_name=`
+   
+    fetch(schema_url)
       .then((res) => res.json())
-      .then((values) => {
-        const samples = values.results
-        fetch(schema_url)
+      .then((cols) => {
+        const schema = cols.results
+        setAppState(prevState => {
+          default_table = schema[0].table_name
+          console.log(default_table)
+          fetch(data_url + default_table)
           .then((res) => res.json())
-          .then((cols) => {
-            const schema = cols.results
-            setAppState(prevState => {
-              return {...prevState, loading: false, schema, samples};
-          })
+          .then((values) => {
+            const samples = values.results
+                setAppState(prevState => {
+                  return {...prevState, loading: false, schema, samples};
+              })
+            })
+          return {...prevState, loading: false, schema};
         })
-      });
+      })
+    
+    
 }, [setAppState])
 
   const handleFilterCallback = (columns) => {

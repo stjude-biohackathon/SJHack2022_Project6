@@ -67,7 +67,7 @@ To get a local copy up and running follow these simple example steps:
    web_1  | Starting development server at http://0.0.0.0:8000/
    web_1  | Quit the server with CONTROL-C.
    ```
-5. To load the database to the Django backend go to this url: http://0.0.0.0:8000/
+5. To load the database to the Django backend go to this url: http://localhost:8000/
    It will take sometime to load the page as it's working on loading data from csv files to database.
    Once dtatabse is loaded, the page will show how many records and tables are loaded to database.
 
