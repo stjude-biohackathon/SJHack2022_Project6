@@ -6,8 +6,8 @@ const Filters = (props) => {
 	let { samples, schema, columns, parentCallback } = props
 	if (!samples || !samples.length) samples = []
 	if (!schema || !schema.length) schema = []
-	const tables = formatColumnsForReact(schema)
-	const uniq_cols = [...new Set(samples.map(c => c.column))]
+	const tables = formatColumnsForReact(schema, samples)
+	const uniq_cols = (columns !== null) ? [...new Set(columns.map(c => c.column))] : [...new Set(samples.map(c => c.column))]
 	const checked_cols = uniq_cols.map(c => samples[0].table_name + c)
 	const [checked, setChecked] = useState(checked_cols)
 	const [state, setState] = useState(columns)
@@ -15,15 +15,21 @@ const Filters = (props) => {
 		setState(visible_cols)
 		parentCallback(visible_cols)
 	}
-	console.log(samples, columns, checked)
+	// console.log(samples, columns, checked)
 
 	let all_cols = []
-	schema.forEach(col => 
+	schema.forEach(col => {
+		let visible = false
+		if (columns === null)
+			visible = samples.find(s => (s.column === col.column && s.table_name === col.table_name)) ? true: false
+		else
+			visible = columns.find(s => (s.column === col.column && s.table_name === col.table_name)) ? true: false
 		all_cols.push({
 			table_name: col.table_name,
 			column: col.column,
-			visible: samples.find(s => (s.column === col.column && s.table_name === col.table_name)) ? true: false
-	}))
+			visible: visible 
+		})
+	})
 
 	// Add/Remove checked item from list
 	const handleCheck = (event) => {
@@ -33,8 +39,11 @@ const Filters = (props) => {
 		} else {
 			vis_cols = vis_cols.splice(checked.indexOf(event.target.value), 1)
 			const [table_name, column] = event.target.value.split('+')
-			let col = all_cols.find(t => (t.table_name === table_name && t.column === column))
-			if (col) col['visible'] = false
+			let col = schema.find(t => (t.table_name === table_name && t.column === column))
+			if (col) {
+				col['visible'] = false
+				if(columns) columns = columns.filter( c => c.column !== col.column)
+			}
 		}
 		visible_cols = all_cols.filter(t => t.visible === true)
 		// console.log(visible_cols)
@@ -43,7 +52,7 @@ const Filters = (props) => {
 			let col = all_cols.find(t => (t.table_name === table_name && t.column === column))
 			if (col) col['visible'] = true
 		})
-		console.log(vis_cols, checked)
+		// console.log(vis_cols, checked)
 		setChecked(vis_cols)
 	}
 
@@ -55,6 +64,7 @@ const Filters = (props) => {
 
 	let visible_cols = all_cols.filter(t => t.visible === true)
 	columns = state
+	console.log(visible_cols)
 	// console.log('visible columns', columns)
 
 	return (
@@ -83,6 +93,7 @@ const Filters = (props) => {
 													value={u_key}
 													onChange={handleCheck}
 													checked={visible_cols.find(c => (c.column === col.column && c.table_name === table.table_name)) ? true: false}
+													// checked={col.is_visible}
 												/>
 												<label className='pl-2' htmlFor={`custom-checkbox-${u_key}`}>{col.column + (col.is_primary ? ' *' : '') + (col.is_foreign ? ' ~' : '')}</label>
 											</div>

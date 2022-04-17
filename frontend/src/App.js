@@ -96,7 +96,7 @@ function App() {
           {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} visible_cols={appState.columns} default_table={appState.default_table}/>}
         </div>
       </div>
-      <footer className='absolute bottom-0 w-full'>
+      <footer className='fixed bottom-0 w-full'>
         <div className='footer h-10 bg-gray-200 p-2'>
           Built with{' '}
           <span role='img' aria-label='love'>

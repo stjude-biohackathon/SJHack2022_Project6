@@ -62,53 +62,6 @@ export function formatDataForReact(samples, schema, visible_cols, default_table)
 				})
 			})
 		}
-		// // populate data from default table
-		// const table_values_url = `http://localhost:8000/api/data/?table_name=`
-		// fetch(table_values_url + default_table)
-		// 	.then((res) => res.json())
-		// 	.then((values) => {
-		// 		const visible_default_cols = visible_cols.filter( c => c.table_name === default_table)
-		// 		populate_default_table(values.results, visible_default_cols, data)
-		// 		console.log(data)
-		// 	})
-			/*
-		// const connection = schema.find()
-		
-		// visible_tables_ar.forEach( table => {
-		// 	fetch(table_values_url + table)
-		// 		.then((res) => res.json())
-		// 		.then((values) => {
-		// 			const sample = data.find() 
-		// 			values.results.forEach(val => {
-		// 				const key = val.column
-		// 				if(visible_cols.find(key)) sample[key] = val.value
-		// 			})
-		// 			data.push(sample)
-				
-		// 		})
-		// })
-
-		
-
-			// create data array
-			const data_url = `http://localhost:8000/api/data/?table_name=`  + col.table_name
-			fetch(data_url)
-				.then((res) => res.json())
-				.then((values) => {
-					if (data.length) {
-
-					} else {
-						const sample = {}
-						values.results.forEach(val => {
-							const key = val.column
-							sample[key] = val.value
-						})
-						console.log(sample)
-						data.push(sample)
-					}
-			})
-		})
-		*/
 	}
 	return [columns, data]
 }
@@ -128,11 +81,6 @@ export function get_table_cols(cols, schema, columns){
 	})
 }
 
-function populate_sample_table(data, rest_values, visible_cols){
-	console.log(data, rest_values, visible_cols)
-
-}
-
 function populate_default_table(samples, columns, data){
 	let count = 0
 	const sample_count = samples.length / columns.length
@@ -146,18 +94,17 @@ function populate_default_table(samples, columns, data){
 	}
 }
 
-export function formatColumnsForReact(schema){
+export function formatColumnsForReact(schema, samples){
 	const columns = []
-	const tables_dups = []
-	schema.forEach(column => {
-	  tables_dups.push(column.table_name)
-	})
+	const tables_dups = schema.map(column => column.table_name)
+	const uniq_cols = [...new Set(samples.map(c => c.column))]
 	const tables = [...new Set(tables_dups)]
 
 	tables.forEach(table => {
 		const tab = { table_name: table, columns:[]}
 		const cols = schema.filter(col => col.table_name === table)
 		cols.forEach(col => {
+			if (uniq_cols.includes(col.column)) col['is_visible'] = true
 			tab.columns.push(col)
 		})
 		columns.push(tab)
