@@ -12,8 +12,8 @@ class Schema(models.Model):
 		('FLOAT','Float'), ('STR','String')
 	)
 	schema_name = models.CharField(max_length = 80, default='default_schema')
-	table_name = models.CharField(max_length = 80)
-	column = models.CharField(max_length = 80)
+	table_name = models.CharField(max_length = 200)
+	column = models.CharField(max_length = 200)
 	type = models.CharField(max_length = 10, choices = DATA_TYPES)
 	is_primary = models.BooleanField()
 	is_foreign = models.BooleanField()
@@ -23,6 +23,6 @@ class Schema(models.Model):
 		return self.column
 
 class Data(models.Model):
-	table_name = models.CharField(max_length = 80)
-	column = models.CharField(max_length = 80)
-	value = models.CharField(max_length = 100)
+	table_name = models.CharField(max_length = 200)
+	column = models.CharField(max_length = 200)
+	value = models.CharField(max_length = 300)

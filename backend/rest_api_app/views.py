@@ -24,6 +24,8 @@ def load_csv_data():
 	schema_name_temp = 'schema_1'
 	csv_files = [f for f in listdir(csv_files_path) if isfile(join(csv_files_path, f))]
 	for csv_file in csv_files:
+		if splitext(csv_file)[1] != '.csv':
+			continue
 		csv_path = csv_files_path + csv_file
 		line_count = 0
 		with open(csv_path, mode='r') as file:
@@ -54,6 +56,21 @@ def load_csv_data():
 							value = value_temp
 						)
 
+def update_database_page(request):
+	return render(request, 'update_database.html')
+
+def repopulate_database(request):
+	#remove data
+	Table.objects.all().delete()
+	Schema.objects.all().delete()
+	Data.objects.all().delete()
+
+	#reload csv files
+	load_csv_data()
+
+	tables = Schema.objects.values('table_name').distinct()
+	data = Data.objects.all()
+	return render(request, 'home.html', {'tables': tables, 'data': data})
 
 class SchemaViewSet(viewsets.ModelViewSet):
 	"""

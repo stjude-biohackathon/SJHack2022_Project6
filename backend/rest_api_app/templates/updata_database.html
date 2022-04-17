@@ -19,11 +19,11 @@
 			<h4> go to <a href="http://localhost:8000/api/">http://localhost:8000/api/</a> 
 				to access all available queries.</h4>
 
-			<div style="margin-top:250px;padding:5px;">
-				<p>If you replace the CSV files in <code>backend/raw_data</code> folder, click following button to update database.</p>
-				<p style='color:red;'>Note: Only click following button if you intend to replace Database. It's irreversible change.</p>	
-				<button onclick="location.href='{% url 'update_db' %}'""><h4>Update Database</h4></button>
+			<div style="margin:50px;padding:5px;">
+				<h4>If you replace the CSV files in <code>backend/raw_data</code> folder, click following button to go to "Update Database" page.</h4>	
+				<button href="{% url 'update_db' %}"><h4>Update Database</h4></button>
 			</div>
 		</div>
 	</body>
+</html> 
 </html> 
