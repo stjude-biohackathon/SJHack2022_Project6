@@ -97,30 +97,23 @@ Note: Following steps are temporary till users can upload their own data from fr
 
 2. Copy all your CSV files to `backend/raw_data/` folder.
 
-### Empty the test data from the database 
-
-
-1. To find container ID of the backend application, type following command in new terminal:
-```sh
-   docker ps
-```
-2. Copy container ID of `sjhack2022_project6_backend` container, for example:
-```sh
-   CONTAINER ID   IMAGE                         COMMAND                  CREATED              STATUS              PORTS                    NAMES
-   3f0e08709f69   sjhack2022_project6_backend   "bash -c 'python bac…"   About a minute ago   Up About a minute   0.0.0.0:8000->8000/tcp   sjhack2022_project6_backend_1
-   3b8d8c29dd0b   postgres                      "docker-entrypoint.s…"   17 hours ago         Up About a minute   0.0.0.0:5432->5432/tcp   sjhack2022_project6_db_1
-```
-3. Empty the database using follwing command (make sure to replace container ID in the command with your id from previous step):
-```sh
-   docker exec -it 3f0e08709f69 python backend/manage.py flush
-```
 ### Repouplate database with your data
 
-To repopulate database with your csv files, go to http://0.0.0.0:8000/</br>
+To repopulate database with your csv files, go to http://localhost:8000/ and Click "Update Database" button. </br> The page will looks like this:
+
+![This is an image](frontend/public/Backend_homepage.png)
 It will take sometime to load the page as it's working on loading data from csv files to database.
 Once dtatabse is loaded, the page will show how many records and tables are loaded to database.
 
 To see your data on frontend go to this url: http://localhost:3000/
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- deployment -->
+## deployment
+
+As this Application is using Docker, it's easy to deploy it to any server or cloud service like AWS. </br>
+Detailed instrunction on deployment will be available soon. 
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
@@ -132,7 +125,7 @@ To see your data on frontend go to this url: http://localhost:3000/
 - [x] Add React frontend
 - [x] Show sample data in table
 - [x] Allow filtering of data
-- [ ] Allow users to select any column from any tables
+- [x] Allow users to select any column from any tables
 - [x] Allow users to export data into csv file or generate reports
 - [ ] Allow users to add new tables or new data for existing tables
 - [ ] Add security feature by implementing login
