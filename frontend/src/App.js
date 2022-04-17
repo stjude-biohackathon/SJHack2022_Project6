@@ -13,8 +13,12 @@ function App() {
     schema: null,
     samples: null,
     columns: null,
+    default_table: null,
     loggedIn: true
   });
+  const schema_url = `http://localhost:8000/api/schema/`
+  const data_table_url = `http://localhost:8000/api/data/?table_name=`
+  const data_tables_url = `http://localhost:8000/api/data/?table_name__in=`
 
   useEffect(() => {
 
@@ -23,8 +27,6 @@ function App() {
     });
 
     let default_table
-    const schema_url = `http://localhost:8000/api/schema/`
-    const data_url = `http://localhost:8000/api/data/?table_name=`
    
     fetch(schema_url)
       .then((res) => res.json())
@@ -32,16 +34,16 @@ function App() {
         const schema = cols.results
         setAppState(prevState => {
           default_table = schema[0].table_name
-          console.log(default_table)
-          fetch(data_url + default_table)
-          .then((res) => res.json())
-          .then((values) => {
-            const samples = values.results
-                setAppState(prevState => {
-                  return {...prevState, loading: false, schema, samples};
+          fetch(data_table_url + default_table)
+            .then((res) => res.json())
+            .then((values) => {
+              const samples = values.results
+              // const columns = schema.filter(t => t.table_name === default_table)
+              setAppState(prevState => {
+                return {...prevState, loading: false, schema, samples};
               })
             })
-          return {...prevState, loading: false, schema};
+          return {...prevState, loading: false, schema, default_table};
         })
       })
     
@@ -50,8 +52,17 @@ function App() {
 
   const handleFilterCallback = (columns) => {
     setAppState(prevState => {
-      return {...prevState, columns};
-  })
+      return {...prevState, loading: true }
+    });
+    const visible_tables = [...new Set(columns.map(c => c.table_name))]
+    fetch(data_tables_url + visible_tables.join(','))
+    .then((res) => res.json())
+    .then((values) => {
+      const samples = values.results
+      setAppState(prevState => {
+        return {...prevState, loading: false, columns, samples};
+      })
+    })
   }
   console.log(appState)
 
@@ -82,7 +93,7 @@ function App() {
         {/* <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3> */}
         <div className='flex flex-nowrap'>
           <Filters samples={appState.samples} schema={appState.schema} columns={appState.columns} parentCallback = {handleFilterCallback} />
-          {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} columns_vis={appState.columns}/>}
+          {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} visible_cols={appState.columns} default_table={appState.default_table}/>}
         </div>
       </div>
       <footer className='absolute bottom-0 w-full'>

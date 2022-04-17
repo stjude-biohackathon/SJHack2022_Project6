@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
-import { formatDataForReact } from '../utils/format_data'
+import { formatDataForReact } from '../utils/format_table_data'
 import { matchSorter } from 'match-sorter'
 import { getCSV } from '../utils/htmlTableToCsv'
 
@@ -60,20 +60,20 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
   fuzzyTextFilterFn.autoRemove = val => !val
 
 const Table = (props) => {
-	let { samples, schema, columns_vis } = props;
+	let { samples, schema, visible_cols, default_table } = props;
 	if (!samples || !samples.length) samples = []
 	if (!schema || !schema.length) schema = []
 	let data = []
 	let columns = []
-	console.log(columns_vis)
+	console.log(visible_cols)
 
 	// if (!samples || samples.length === 0) return <p>No repos, sorry</p>;
 
-	const [columns_, data_] = formatDataForReact(samples, schema)
+	const [columns_, data_] = formatDataForReact(samples, schema, visible_cols, default_table)
 
 	columns = React.useMemo(() => columns_, [])
 	data = React.useMemo(() => data_, [])
-	// console.log(data)
+	// console.log(columns, data)
 	const filterTypes = React.useMemo(
 		() => ({
 		  	// Add a new fuzzyTextFilterFn filter type.

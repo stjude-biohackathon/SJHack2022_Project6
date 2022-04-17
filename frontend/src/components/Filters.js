@@ -1,18 +1,21 @@
 import React from 'react'
 import { useState } from 'react'
-import { formatColumnsForReact } from '../utils/format_data'
+import { formatColumnsForReact } from '../utils/format_table_data'
 
 const Filters = (props) => {
 	let { samples, schema, columns, parentCallback } = props
 	if (!samples || !samples.length) samples = []
 	if (!schema || !schema.length) schema = []
 	const tables = formatColumnsForReact(schema)
-	const [checked, setChecked] = useState([])
+	const uniq_cols = [...new Set(samples.map(c => c.column))]
+	const checked_cols = uniq_cols.map(c => samples[0].table_name + c)
+	const [checked, setChecked] = useState(checked_cols)
 	const [state, setState] = useState(columns)
 	const changeState = () => {
 		setState(visible_cols)
 		parentCallback(visible_cols)
 	}
+	console.log(samples, columns, checked)
 
 	let all_cols = []
 	schema.forEach(col => 
@@ -28,7 +31,7 @@ const Filters = (props) => {
 		if (event.target.checked) {
 			vis_cols = [...checked, event.target.value]
 		} else {
-			vis_cols.splice(checked.indexOf(event.target.value), 1)
+			vis_cols = vis_cols.splice(checked.indexOf(event.target.value), 1)
 			const [table_name, column] = event.target.value.split('+')
 			let col = all_cols.find(t => (t.table_name === table_name && t.column === column))
 			if (col) col['visible'] = false
@@ -40,7 +43,7 @@ const Filters = (props) => {
 			let col = all_cols.find(t => (t.table_name === table_name && t.column === column))
 			if (col) col['visible'] = true
 		})
-		// console.log(vis_cols, checked)
+		console.log(vis_cols, checked)
 		setChecked(vis_cols)
 	}
 

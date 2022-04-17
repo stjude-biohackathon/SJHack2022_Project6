@@ -69,7 +69,7 @@ class DataViewSet(generics.ListAPIView):
 	queryset = Data.objects.all()
 	serializer_class = DatatSerializer
 
-	filter_fields = (
-		'table_name',
-		'column'
-	)
+	filter_fields = {
+		'table_name': ['in','exact'],
+		'column': ['in','exact']
+	}
