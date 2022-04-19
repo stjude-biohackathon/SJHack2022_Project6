@@ -124,14 +124,14 @@ const Table = (props) => {
 	)
 
   return (
-		<div className='flex-auto overflow-scroll'>
+		<div className='flex-auto overflow-x-scroll'>
 			<button
 				onClick={getCSV}
 				className='float-right inline-block font-bold text-sm mx-4 px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-20 mb-2'
 			>
 				Download CSV
 			</button>
-			<table
+			<table 
 				{...getTableProps()}
 				className='m-auto border-4 border-opacity-25 border-collapse mb-10 mt-6 border-red-900'
 			>
@@ -144,7 +144,7 @@ const Table = (props) => {
 									className='border border-opacity-50 border-red-900 p-5 bg-gray-200'
 								>
 									{column.render('Header')}
-									<div>
+									<div className='txt-xs'>
 										{column.canFilter
 											? column.render('Filter')
 											: null}
@@ -177,7 +177,7 @@ const Table = (props) => {
 									return (
 										<td
 											{...cell.getCellProps()}
-											className='border border-opacity-50 border-red-600 py-2 px-1'
+											className='border border-opacity-50 border-red-600 py-1 px-1'
 										>
 											{cell.render('Cell')}
 										</td>

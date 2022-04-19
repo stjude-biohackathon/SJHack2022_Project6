@@ -86,7 +86,7 @@ function App() {
 
   return (
     <div className='App flex flex-col justify-start h-screen'>
-      <div className='w-full mx-auto'>
+      <div className='w-full mx-auto sticky top-0'>
         <Nav handleLogin={login} loggedIn={appState.loggedIn} />
       </div>
       <div className='repo-container items-start h-full'>

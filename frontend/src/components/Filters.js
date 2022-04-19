@@ -68,8 +68,8 @@ const Filters = (props) => {
 	// console.log('visible columns', columns)
 
 	return (
-		<div className='w-1/4 h-100 bg-gray-200 flex flex-col justify-start z-10'>
-			<aside className='h-5/6 sticky top-0 overflow-y-scroll scrolling-touch'>
+		<div className='w-1/4 h-max bg-gray-200 flex flex-col justify-start z-10'>
+			<aside className='h-screen sticky top-0 overflow-y-scroll scrolling-touch'>
 			<h2 className='text-2xl mt-10 mb-5'> Filters </h2>
 			<div className='border-t-2 border-red-800 border-opacity-25 items-start pl-10 grid justify-items-start text-left'>
 				<p className='text-sm mt-2'> *  Unique ID <br/> ~ Connecting ID</p>

@@ -131,3 +131,19 @@ Detailed instrunction on deployment will be available soon.
 - [ ] Add security feature by implementing login
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- ROADMAP -->
+
+## Developed by Team Sigma 6
+
+### web developer and dev-ops experts
+
+* Jaimin Patel <a href="https://linkedin.com//in/jaimin-patel-bioinfo/"><img src="https://img.shields.io/badge/-Jaimin%20Patel-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>
+* Kennon Silence <a href="https://www.linkedin.com/in/kennonsilence/"><img src="https://img.shields.io/badge/-Kennon%20Silence-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>
+* Karthik Vadambacheri Manian <a href="https://www.linkedin.com/in/karthikvm/"><img src="https://img.shields.io/badge/-Karthik%20Vadambacheri%20Manian-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>
+
+### Data cleaning and Data management experts
+
+* Jia Sujuan <a href="https://www.linkedin.com/in/sujuan-jia-6b24b518/"><img src="https://img.shields.io/badge/-Jia%20Sujuan-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>
+* Kubra Bahcivanci <a href="https://www.linkedin.com/in/kubra-bahcivanci-mba-healthcare-management-b34bb11b4/"><img src="https://img.shields.io/badge/-Kubra%20Bahcivanci-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>
+* Pei-Lin Chen <a href="https://www.linkedin.com/in/pei-linchen/"><img src="https://img.shields.io/badge/-Pei%20Lin%20Chen-0077B5?style=flat&logo=Linkedin&logoColor=white"/></a>

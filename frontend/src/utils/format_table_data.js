@@ -43,7 +43,6 @@ export function formatDataForReact(samples, schema, visible_cols, default_table)
 				const table_data = []
 				populate_default_table(table_samples, required_cols, table_data)
 				const connection_key = Object.keys(data[0]).filter(k => k in table_data[0])
-				// console.log(connection_key)
 				data.forEach(d => {
 					const connection_val = d[connection_key]
 					visible_t_cols_ar.forEach( v => {
