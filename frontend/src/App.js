@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import Nav from './components/Nav';
-import Filters from './components/Filters';
-import Table from './components/Table';
-import WithTableLoading from './components/withTableLoading';
+import React, { useEffect, useState } from 'react'
+import './App.css'
+import Nav from './components/Nav'
+import Filters from './components/Filters'
+import Table from './components/Table'
+import WithTableLoading from './components/withTableLoading'
+import WithFiltersLoading from './components/withFilterLoading'
 import githubImg from './static/GitHub-Mark-32px.png'
 
 function App() {
-  const TableLoading = WithTableLoading(Table);
+  const TableLoading = WithTableLoading(Table)
+  const FiltersLoading = WithFiltersLoading(Filters)
   const [appState, setAppState] = useState({
     loading: false,
     schema: null,
@@ -27,6 +29,7 @@ function App() {
     });
 
     let default_table
+    //  = 'ProjectRequest' // remove comment for sujuan's data
    
     fetch(schema_url)
       .then((res) => res.json())
@@ -38,9 +41,9 @@ function App() {
             .then((res) => res.json())
             .then((values) => {
               const samples = values.results
-              // const columns = schema.filter(t => t.table_name === default_table)
+              const columns = schema.filter(t => t.table_name === default_table)
               setAppState(prevState => {
-                return {...prevState, loading: false, schema, samples};
+                return {...prevState, loading: false, schema, samples, columns};
               })
             })
           return {...prevState, loading: false, schema, default_table};
@@ -92,7 +95,7 @@ function App() {
       <div className='repo-container items-start h-full'>
         {/* <h3 className='text-3xl mx-auto my-5'>Table: Samples</h3> */}
         <div className='flex flex-nowrap'>
-          <Filters samples={appState.samples} schema={appState.schema} columns={appState.columns} parentCallback = {handleFilterCallback} />
+          <FiltersLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} columns={appState.columns} parentCallback = {handleFilterCallback} />
           {appState.loggedIn && <TableLoading isLoading={appState.loading} samples={appState.samples} schema={appState.schema} visible_cols={appState.columns} default_table={appState.default_table}/>}
         </div>
       </div>

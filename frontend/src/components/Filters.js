@@ -45,7 +45,7 @@ const Filters = (props) => {
 				if(columns) columns = columns.filter( c => c.column !== col.column)
 			}
 		}
-		visible_cols = all_cols.filter(t => t.visible === true)
+		visible_cols = all_cols.filter(c => c.visible === true)
 		// console.log(visible_cols)
 		checked.forEach(chk => {
 			const [table_name, column] = chk.split('+')
@@ -62,11 +62,9 @@ const Filters = (props) => {
 		if (col) col['visible'] = true
 	})
 
-	let visible_cols = all_cols.filter(t => t.visible === true)
-	columns = state
-	console.log(visible_cols)
+	let visible_cols = all_cols.filter(c => c.visible === true)
+	// console.log(visible_cols)
 	// console.log('visible columns', columns)
-
 	return (
 		<div className='w-1/4 h-max bg-gray-200 flex flex-col justify-start z-10'>
 			<aside className='h-screen sticky top-0 overflow-y-scroll scrolling-touch'>
@@ -81,7 +79,7 @@ const Filters = (props) => {
 						<div className='justify-self-start p-1'>
 							<div className='font-bold'>{table.table_name}</div>
 							<ul className='column-list grid place-items-start p-1'>
-								{table.columns.map(col => {
+								{schema.filter(col => col.table_name === table.table_name).map(col => {
 									const u_key = table.table_name + '+' + col.column
 									return (
 										<li key={u_key}>

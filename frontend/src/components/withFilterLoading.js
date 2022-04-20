@@ -1,13 +1,13 @@
 import React from 'react'
 
-function WithTableLoading(Component) {
+function WithFiltersLoading(Component) {
   return function WihLoadingComponent({ isLoading, ...props }) {
     if (!isLoading) return <Component {...props} />
     return (
       <p className='txt-sm'>
-        Loading table..
+        Loading filters..
       </p>
     )
   }
 }
-export default WithTableLoading
+export default WithFiltersLoading
