@@ -77,7 +77,9 @@ const Filters = (props) => {
 				tables.map(table => (
 					<div key={table.table_name} className='border-t-2 border-red-800 border-opacity-25 w-full'>
 						<div className='justify-self-start p-1'>
-							<div className='font-bold'>{table.table_name}</div>
+							<div className='font-bold'>{
+								(table.table_name.includes('00_')) ? table.table_name.split('00_')[1]: table.table_name 
+							}</div>
 							<ul className='column-list grid place-items-start p-1'>
 								{schema.filter(col => col.table_name === table.table_name).map(col => {
 									const u_key = table.table_name + '+' + col.column

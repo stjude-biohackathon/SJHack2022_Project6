@@ -29,7 +29,6 @@ function App() {
     });
 
     let default_table
-    //  = 'ProjectRequest' // remove comment for sujuan's data
    
     fetch(schema_url)
       .then((res) => res.json())
