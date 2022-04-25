@@ -1,21 +1,18 @@
 import React from 'react'
 import { useState } from 'react'
 import { formatColumnsForReact } from '../utils/format_table_data'
+import CheckboxesGroup from './CheckboxesGroup'
 
 const Filters = (props) => {
 	let { samples, schema, columns, parentCallback } = props
 	if (!samples || !samples.length) samples = []
 	if (!schema || !schema.length) schema = []
 	const tables = formatColumnsForReact(schema, samples)
-	const uniq_cols = (columns !== null) ? [...new Set(columns.map(c => c.column))] : [...new Set(samples.map(c => c.column))]
-	const checked_cols = uniq_cols.map(c => samples[0].table_name + c)
-	const [checked, setChecked] = useState(checked_cols)
 	const [state, setState] = useState(columns)
 	const changeState = () => {
 		setState(visible_cols)
 		parentCallback(visible_cols)
 	}
-	// console.log(samples, columns, checked)
 
 	let all_cols = []
 	schema.forEach(col => {
@@ -27,40 +24,19 @@ const Filters = (props) => {
 		all_cols.push({
 			table_name: col.table_name,
 			column: col.column,
-			visible: visible 
+			visible: visible,
+			is_primary: col.is_primary,
+			is_foreign: col.is_foreign 
 		})
 	})
 
-	// Add/Remove checked item from list
-	const handleCheck = (event) => {
-		let vis_cols = [...checked]
-		if (event.target.checked) {
-			vis_cols = [...checked, event.target.value]
-		} else {
-			vis_cols = vis_cols.splice(checked.indexOf(event.target.value), 1)
-			const [table_name, column] = event.target.value.split('+')
-			let col = schema.find(t => (t.table_name === table_name && t.column === column))
-			if (col) {
-				col['visible'] = false
-				if(columns) columns = columns.filter( c => c.column !== col.column)
-			}
-		}
+	// update visible_cols list
+	const updateVisCols = (columns) => {
+		columns.forEach(col => {
+			all_cols.find(c => c.table_name === col.table_name && c.column === col.column).visible = col.visible
+		})
 		visible_cols = all_cols.filter(c => c.visible === true)
-		// console.log(visible_cols)
-		checked.forEach(chk => {
-			const [table_name, column] = chk.split('+')
-			let col = all_cols.find(t => (t.table_name === table_name && t.column === column))
-			if (col) col['visible'] = true
-		})
-		// console.log(vis_cols, checked)
-		setChecked(vis_cols)
 	}
-
-	checked.forEach(chk => {
-		const [table_name, column] = chk.split('+')
-		let col = all_cols.find(t => (t.table_name === table_name && t.column === column))
-		if (col) col['visible'] = true
-	})
 
 	let visible_cols = all_cols.filter(c => c.visible === true)
 	// console.log(visible_cols)
@@ -81,25 +57,7 @@ const Filters = (props) => {
 								(table.table_name.includes('00_')) ? table.table_name.split('00_')[1]: table.table_name 
 							}</div>
 							<ul className='column-list grid place-items-start p-1'>
-								{schema.filter(col => col.table_name === table.table_name).map(col => {
-									const u_key = table.table_name + '+' + col.column
-									return (
-										<li key={u_key}>
-											<div className='toppings-list-item m-0.5'>
-												<input
-													type='checkbox'
-													id={`custom-checkbox-${u_key}`}
-													name={u_key}
-													value={u_key}
-													onChange={handleCheck}
-													checked={visible_cols.find(c => (c.column === col.column && c.table_name === table.table_name)) ? true: false}
-													// checked={col.is_visible}
-												/>
-												<label className='pl-2' htmlFor={`custom-checkbox-${u_key}`}>{col.column + (col.is_primary ? ' *' : '') + (col.is_foreign ? ' ~' : '')}</label>
-											</div>
-										</li>
-									)
-									})}
+							<CheckboxesGroup table_name={table.table_name} columns={all_cols.filter(col => col.table_name === table.table_name)} filterCallback={updateVisCols} />
 								</ul>
 						</div>
 					</div>
