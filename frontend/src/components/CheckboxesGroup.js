@@ -28,7 +28,7 @@ export default function CheckboxesGroup(props) {
 			  	columns.map(col => {
 					const u_key = table_name + '+' + col.column
 					return (
-						<FormControlLabel
+						<FormControlLabel key={u_key}
 				  			control={
 								<Checkbox checked={col.visible} onChange={handleChange} name={col.column} id={u_key} value={col.column} />
 				  			}
