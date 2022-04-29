@@ -57,16 +57,18 @@ function App() {
       return {...prevState, loading: true }
     });
     const visible_tables = [...new Set(columns.map(c => c.table_name))]
-    fetch(data_tables_url + visible_tables.join(','))
-    .then((res) => res.json())
-    .then((values) => {
-      const samples = values.results
-      setAppState(prevState => {
-        return {...prevState, loading: false, columns, samples};
+    const connecting_cols = appState.schema.filter(c => visible_tables.includes(c.table_name) && (c.is_foreign || c.is_primary))
+    const visible_cols = [...new Set(columns.map(c => c.column)), ...new Set(connecting_cols.map(c => c.column))]
+    fetch(data_tables_url + visible_tables.join(',') + '&column__in=' + visible_cols.join(','))
+      .then((res) => res.json())
+      .then((values) => {
+        const samples = values.results
+        setAppState(prevState => {
+          return {...prevState, loading: false, columns, samples};
+        })
       })
-    })
   }
-  console.log(appState)
+  // console.log(appState)
 
   const login = (user, pwd) => {
       if(user && pwd) {

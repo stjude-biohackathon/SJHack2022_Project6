@@ -45,6 +45,15 @@ const Filters = (props) => {
 		<div className='w-1/4 h-max bg-gray-200 flex flex-col justify-start z-10'>
 			<aside className='h-screen sticky top-0 overflow-y-scroll scrolling-touch'>
 			<h2 className='text-2xl mt-10 mb-5'> Filters </h2>
+			<button 
+				className='inline-block font-bold text-sm my-6 px-4 py-2 bg-gray-200 
+				hover:bg-red-900 leading-none border border-2 rounded text-white 
+				hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-4 lg:mt-0'
+				type='button'
+				onClick={changeState}
+			>
+				Apply
+			</button>
 			<div className='border-t-2 border-red-800 border-opacity-25 items-start pl-10 grid justify-items-start text-left'>
 				<p className='text-sm mt-2'> *  Unique ID <br/> ~ Connecting ID</p>
 			</div>
@@ -65,15 +74,6 @@ const Filters = (props) => {
 			}
 			
 			</div>
-			<button 
-				className='inline-block font-bold text-sm my-6 px-4 py-2 bg-gray-200 
-				hover:bg-red-900 leading-none border border-2 rounded text-white 
-				hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-4 lg:mt-0'
-				type='button'
-				onClick={changeState}
-			>
-				Apply
-			</button>
 			</aside> 
 		</div>
 	)

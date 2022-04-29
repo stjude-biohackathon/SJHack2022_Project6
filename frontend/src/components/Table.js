@@ -65,7 +65,7 @@ const Table = (props) => {
 	if (!schema || !schema.length) schema = []
 	let data = []
 	let columns = []
-	console.log(visible_cols)
+	// console.log(visible_cols)
 
 	// if (!samples || samples.length === 0) return <p>No repos, sorry</p>;
 
@@ -127,13 +127,13 @@ const Table = (props) => {
 		<div className='flex-auto overflow-x-scroll'>
 			<button
 				onClick={getCSV}
-				className='float-right inline-block font-bold text-sm mx-4 px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-20 mb-2'
+				className='inline-block font-bold text-sm mx-4 px-4 py-2 bg-gray-200 hover:bg-red-900 leading-none border border-2 rounded text-white hover:border-white border-transparent text-red-900 hover:text-white border-red-900 mt-20 mb-2 right-4 absolute'
 			>
 				Download CSV
 			</button>
 			<table 
 				{...getTableProps()}
-				className='m-auto border-4 border-opacity-25 border-collapse mb-10 mt-6 border-red-900'
+				className='m-auto border-4 border-opacity-25 border-collapse mb-10 mt-36 border-red-900'
 			>
 				<thead>
 					{headerGroups.map((headerGroup) => (
@@ -177,7 +177,7 @@ const Table = (props) => {
 									return (
 										<td
 											{...cell.getCellProps()}
-											className='border border-opacity-50 border-red-600 py-1 px-1'
+											className='border border-opacity-50 border-red-600 py-1 px-1 text-s'
 										>
 											{cell.render('Cell')}
 										</td>

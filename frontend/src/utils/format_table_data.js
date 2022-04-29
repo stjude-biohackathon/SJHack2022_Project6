@@ -20,19 +20,22 @@ export function formatDataForReact(samples, schema, visible_cols, default_table)
 
 		// get react table's visible columns
 		const cols = [...new Set(visible_cols.map(c => c.column))]
+		const visible_tables = [...new Set(visible_cols.map(c => c.table_name))]
+		let main_table = default_table
+		if (visible_tables.length === 1) main_table = visible_tables[0]
 		get_table_cols(cols, schema, columns)
 
 		// get default table's visible data
 		const visible_cols_ar = [...new Set(visible_cols.map(c => c.column))]
-		const default_table_cols = visible_cols.filter(c => c.table_name === default_table)
+		const default_table_cols = visible_cols.filter(c => c.table_name === main_table)
 		const default_table_cols_ar = [...new Set(default_table_cols.map(c => c.column))]
-		const default_table_samples = samples.filter(s => s.table_name === default_table && visible_cols_ar.includes(s.column))
+		const default_table_samples = samples.filter(s => s.table_name === main_table && visible_cols_ar.includes(s.column))
 		populate_default_table(default_table_samples, default_table_cols, data)
 
 		// get other table's visible data
-		console.log(visible_cols)
-		const visible_tables_ar = [...new Set(visible_cols.map(c => c.table_name))].filter(t => t !== default_table)
-		if (visible_tables_ar.length && visible_tables_ar[0] !== undefined) {
+		// console.log(visible_cols)
+		const visible_tables_ar = [...new Set(visible_cols.map(c => c.table_name))].filter(t => t !== main_table)
+		if (visible_tables.length >1 && visible_tables_ar.length && visible_tables_ar[0] !== undefined) {
 			visible_tables_ar.forEach( vis_tab => {
 				const table_cols = schema.filter( c=> c.table_name === vis_tab)
 				const required_cols = table_cols.filter(c => (visible_cols_ar.includes(c.column) || c.is_foreign || c.is_primary))
@@ -81,12 +84,14 @@ export function get_table_cols(cols, schema, columns){
 }
 
 function populate_default_table(samples, columns, data){
+	// console.log(samples, columns)
 	let count = 0
 	const sample_count = samples.length / columns.length
 	for (let i = 0; i < sample_count; i++){
 		const sample = {}
 		for (let j = 0; j < columns.length; j++){
 			count = (i * columns.length) + j
+			if(!samples[count]) continue
 			sample[samples[count].column] = samples[count].value
 		}
 		data.push(sample)
