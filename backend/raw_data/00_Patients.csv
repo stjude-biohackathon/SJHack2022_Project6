@@ -1,7 +1,0 @@
-patient_id,age_at_diagnosis,sex,race,diagnosis_group,diagnosis_year,treatment_id
-SJ01,10,F,White,Acute lymphoblastic leukemia,2010,TR_01
-SJ02,5,F,White,Retinoblastoma,1998,TR_04
-SJ03,8,M,Black,Neuroblastoma,1987,TR_02
-SJ04,1,M,Other,Retinoblastoma,2011,TR_01
-SJ05,9,F,Black,Neuroblastoma,1979,TR_02
-SJ06,20,M,White,Acute lymphoblastic leukemia,2000,TR_02
